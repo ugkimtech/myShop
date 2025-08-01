@@ -1,0 +1,62 @@
+body{
+    font-family: Arial ;
+    background-color: whitesmoke;
+    display: block;
+    margin: 0 auto;
+}
+
+.content{
+    width: 100vw;
+    height: 100vh;
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+    
+}
+
+.back-button{
+    position: fixed;
+    left: 2%;
+    border: none;
+    background-color: blue;
+    padding: 8px;
+    border-radius: 100%;
+    font-weight: bolder;
+    color: white;
+}
+
+.back-button:hover{
+    background-color: rgb(37, 235, 79);
+    cursor: pointer;
+}
+
+h1{
+    margin-top: 10%;
+}
+
+
+.status-table{
+    background-color: white;
+    padding: 20px;
+    margin: 0 auto;
+    width: 90%;
+    border-radius: 10px;
+}
+
+table, tr, td, th{
+    width: 90%;
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 10px;
+}
+
+th{
+    color: white;
+    background-color: blue;
+}
+
+td:hover{
+    cursor: pointer;
+    background-color: aqua;
+    font-weight: bolder;
+}

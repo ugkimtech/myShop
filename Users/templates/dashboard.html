@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="./../static/Users/css/dashboard.css" />
+</head>
+
+<body>
+    <div class="main-content">
+        <h1>Business Manager</h1>
+        <div class="content">
+            <button type="button" onclick="addItem()">Add Item</button>
+            <button type="button" onclick="addStock()">Add Stock</button>
+            <button type="button" onclick="addSale()">Add Sale</button>
+            <button type="button" onclick="addExpenditure()">Add Expenditures</button>
+            
+
+            <!--add item-->
+            <div class="add-item-form" id="addItem">
+                <h3><u>Add Item</u></h3>
+                <form action="{% url 'users:addItem' %}" method="POST">
+                    {% csrf_token %}
+                    <label>Item <br />
+                        <input type="text" name="item" required />
+                    </label> <br />
+                    <button type="submit" class="submit-button">Save</button>
+                </form>
+            </div>
+
+
+            <!--add stock-->
+            <div class="add-stock-form" id="addStock">
+                <h3><u>Add Stock</u></h3>
+                <form action="{% url 'users:addStock' %}" method="POST">
+                    {% csrf_token %}
+                    <label>Item <br />
+                        <select name="item" required>
+                            <option value="">Select-item</option>
+                            {% if items %}
+                                {% for item in items %}
+                                    <option value="{{item.item}}">{{item.item}}</option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                    </label> <br />
+                    <label>Quantity <br />
+                        <input type="number" name="qty" required />
+                    </label> <br />
+                    <label>Total Buying Price <br />
+                        <input type="number" name="total_buying_price" required />
+                    </label> <br />
+                    <label>Selling Price / Unit <br />
+                        <input type="number" name="selling_price_each" required />
+                    </label> <br />
+                    <label>Capital Source <br />
+                        <select name="source" required>
+                            <option value="">Select-Source</option>
+                            <option value="internal">From This busines</option>
+                            <option value="others">Others</option>
+                        </select>
+                    </label> <br />
+                    <button type="submit" class="submit-button">Save</button>
+                </form>
+            </div>
+
+
+            <!--add sale-->
+            <div class="add-sale-form" id="addSale">
+                <h3><u>Add Sale</u></h3>
+                <form action="{% url 'users:addSale' %}" method="POST">
+                    {% csrf_token %}
+                    <label>Item <br />
+                        <select name="item" required>
+                            <option value="">Select-item</option>
+                            {% if stock %}
+                                {% for item in stock %}
+                                    <option value="{{item.item}}">{{item.item}}</option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                    </label> <br />
+                    <label>Quantity <br />
+                        <input type="number" step="any" name="quantity" required />
+                    </label> <br />
+                    <button type="submit" class="submit-button">Save</button>
+                </form>
+            </div>
+
+            <!--add expenditure-->
+            <div class="add-expenditures-form" id="addExpenditure">
+                <h3><u>Add Expenditures</u></h3>
+                <form action="{% url 'users:expenditure' %}" method="POST">
+                    {% csrf_token %}
+                    </label> <br />
+                    <label>Amount <br />
+                        <input type="number" name="amount" required />
+                    </label> <br />
+                    <label>Reason <br />
+                        <input type="text" name="reason" required />
+                    </label> <br />
+                    <button type="submit" class="submit-button">Save</button>
+                </form>
+            </div>
+        </div>
+
+        <h3>SALES</h3>
+        <div class="status-table">
+            <table>
+                <tbody>
+                    <tr>
+                        <th>DATE</th>
+                        <th>ITEM</th>
+                        <th>QTY</th>
+                        <th>AMOUNT</th>
+                        <th>PROFITS</th>
+                    </tr>
+                    {% for sale in sales %}
+                    <tr>
+                        <td>{{sale.date}}</td>
+                        <td>{{sale.item}}</td>
+                        <td>{{sale.quantity}}</td>
+                        <td>{{sale.amount}}</td>
+                        <td>{{sale.profits}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <h3>BUSINESS STATUS</h3>
+        <div class="status-table">
+            <table>
+                <tbody>
+                    <tr>
+                        <th>CASH AMOUNT</th>
+                        <th>STOCK AMOUNT</th>
+                        <th>BUSINESS WEIGHT</th>
+                        <th>DEVELOPMENT</th>
+                    </tr>
+                    <tr>
+                        <td>{{status.available_cash}}</td>
+                        <td>{{status.stock_amount}}</td>
+                        <td>{{status.weight}}</td>
+                        <td>{{status.development}}</td>
+                    </tr>
+                </tbody>
+            </table><br />
+            <p>This status is based on the initial day of system use</p>
+        </div>
+
+        <h3>STOCK</h3>
+        <div class="status-table">
+            <table>
+                <tbody>
+                    <tr>
+                        <th>ITEM</th>
+                        <th>B.P</th>
+                        <th>PRICE @</th>
+                        <th>QTY</th>
+                    </tr>
+                    {% for st in stock %}
+                    <tr>
+                        <td>{{st.item}}</td>
+                        <td>{{st.buying_price_each}}</td>
+                        <td>{{st.selling_price_each}}</td>
+                        <td>{{st.qty}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <h3>STOCK HISTORY</h3>
+        <div class="status-table">
+            <table>
+                <tbody>
+                    <tr>
+                        <th>DATE</th>
+                        <th>ITEM</th>
+                        <th>QTY</th>
+                        <th>B.P</th>
+                        <th>B.P @</th>
+                        <th>S.P @</th>
+                        <th>PROFITS @</th>
+                        <th>TOTAL S.P</th>
+                        <th>TOTAL P</th>
+                    </tr>
+                    {% for hist in history %}
+                    <tr>
+                        <td>{{hist.date}}</td>
+                        <td>{{hist.item}}</td>
+                        <td>{{hist.qty}}</td>
+                        <td>{{hist.total_buying_price}}</td>
+                        <td>{{hist.buying_price_each}}</td>
+                        <td>{{hist.selling_price_each}}</td>
+                        <td>{{hist.profits_each}}</td>
+                        <td>{{hist.total_selling_price}}</td>
+                        <td>{{hist.total_profits}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <h3>EXPENDITURES</h3>
+        <div class="status-table">
+            <table>
+                <tbody>
+                    <tr>
+                        <th>DATE</th>
+                        <th>AMMOUNT</th>
+                        <th>REASON</th>
+                    </tr>
+                    {% for exp in expenditures %}
+                    <tr>
+                        <td>{{exp.date}}</td>
+                        <td>{{exp.amount}}</td>
+                        <td>{{exp.reason}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="../static/Users/js/script.js"></script>
+</body>
+
+</html>

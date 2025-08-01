@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>status</title>
+    <link rel="stylesheet" href="./../static/Users/css/status.css" />
+</head>
+<body>
+    <div class="content">
+        <h1><button class="back-button"> < </button>BUSINESS STATUS</h1>
+        <div class="status-table">
+            <table>
+                <tbody>
+                    <tr>
+                        <th>CASH AMOUNT</th>
+                        <th>STOCK AMOUNT</th>
+                        <th>BUSINESS WEIGHT</th>
+                        <th>PROFITS</th>
+                        <th>DEVELOPMENT</th>
+                    </tr>
+                    <tr>
+                        <td>{{status.available_cash}}</td>
+                        <td>{{status.stock_amount}}</td>
+                        <td>{{status.weight}}</td>
+                        <td>{{status.profits}}</td>
+                        <td>{{status.development}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>This status is based on the initial day of systemuse</p>
+        </div>
+    </div>
+</body>
+</html>
